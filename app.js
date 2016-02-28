@@ -100,7 +100,7 @@ $(document).ready(function(){
                         var link = $(this);
                         // add anchor css
                         $.each(list_config.root.li.a.css.classes,function(idx,el){
-                            console.log(list_config.name + " add css class " + el + " -> " + link.href());
+                            console.log(list_config.name + " add css class " + el + " -> " + link.attr('href'));
                             link.addClass(el);
                         }); // li.a.css
                     }); // li.a
