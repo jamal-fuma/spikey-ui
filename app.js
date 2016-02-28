@@ -36,15 +36,15 @@ $(document).ready(function(){
             name: 'fs-inline-list-left',
             root: {
                 css: {
-                    classes:[ 'col-xs-12','col-sm-10','col-md-10','col-lg-10' ],
-                    li: {
+                    classes:[ 'col-xs-12','col-sm-10','col-md-10','col-lg-10' ]
+                },
+                li: {
+                    css: {
+                        classes:[ 'col-xs-12','col-sm-2','col-md-2','col-lg-2' ]
+                    },
+                    a: {
                         css: {
-                            classes:[ 'col-xs-12','col-sm-2','col-md-2','col-lg-2' ]
-                        },
-                        a: {
-                            css: {
-                                classes:[ 'Wt-ip' ]
-                            }
+                            classes:[ 'Wt-ip' ]
                         }
                     }
                 }
@@ -77,9 +77,9 @@ $(document).ready(function(){
 
             var list_element = $("." + list_config.name);
 
-            console.log("Config for list: " + list_config.root.li);
-            console.log("Config for list: " + list_config_hash.root.li);
             console.log("Config for list: " + list_config.name);
+            console.log("Config for list.root: " + list_config.root.li);
+            console.log("Config for list.root.lit: " + list_config_hash.root.li);
 
             // add the parent css classes
             $.each(list_config.root.css.classes,function(idx,el){
