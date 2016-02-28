@@ -7,7 +7,7 @@ var WidgetFactory =
         // private: within this closure scope
         var registry = metadata.components;
         var api_base = metadata.api_gw;
-        var site_base = metadata.site;
+        var site_base = api_base.site;
         var cdn_url  = api_base.cdn;
 
         // resolve component to service url
