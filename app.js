@@ -82,7 +82,7 @@ $(document).ready(function(){
         };
     };
 
-    function broadcast_css_updates(list_config)
+    function broadcast_css_updates(list_config,child,grandchild)
     {
         console.log("Config for list: " + list_config.name);
 
@@ -94,17 +94,17 @@ $(document).ready(function(){
         });
 
         // add the child css classes
-        root.find('li').each(function(){
+        root.find(child).each(function(){
             // broadcast add css class message
             var list_item = $(this);
-            $.each(list_config.root['li'].css.classes, function(idx,el) {
+            $.each(list_config.root[child].css.classes, function(idx,el) {
                 $(document).trigger(list_config.name + ".layout.classes.added",[list_item,el]);
             });// li.css
 
             // broadcast add css class message
-            list_item.find('a').each(function(){
+            list_item.find(grandchild).each(function(){
                 var link = $(this);
-                $.each(list_config.root['li']['a'].css.classes,function(idx,el){
+                $.each(list_config.root[child][grandchild].css.classes,function(idx,el){
                     $(document).trigger(list_config.name + ".layout.classes.added",[link,el]);
                 }); // li.a.css
             });
@@ -119,11 +119,11 @@ $(document).ready(function(){
 
             // subscribe to update elements as needed
             $(document).on(list_config.name + ".layout.classes.added",function(e, element, css_class_to_add){
-                element.addClass(css_class_to_add);
+                $(element).addClass(css_class_to_add);
             });
 
             // pump events
-            broadcast_css_updates(list_config);
+            broadcast_css_updates(list_config,'li','a');
         }); // nav elements
     }); // on
 
