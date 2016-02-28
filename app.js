@@ -73,9 +73,13 @@ $(document).ready(function(){
     $(document).on("masthead.data.load.done",function(e,resp){
         $.each(menubar.nav,function(){
             var list_config  = this;
+            var list_config_hash  = $(this);
+
             var list_element = $("." + list_config.name);
 
             console.log("Config for list: " + list_config);
+            console.log("Config for list: " + list_config_hash);
+            console.log("Config for list: " + list_config.name);
 
             // add the parent css classes
             $.each(list_config.root.css.classes,function(idx,el){
