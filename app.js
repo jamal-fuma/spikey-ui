@@ -31,7 +31,8 @@ $(document).ready(function(){
     PageView.reload();
 
     var menubar = {
-        nav: [{
+        nav: [
+            {
             name: 'fs-inline-list-left',
             root: {
                 css: {
@@ -71,7 +72,7 @@ $(document).ready(function(){
 
     $(document).on("masthead.data.load.done",function(e,resp){
         $.each(menubar.nav,function(){
-            var list_config  = this;
+            var list_config  = $(this);
             var list_element = $("." + list_config.name);
 
             console.log("Config for list: " + list_config.name);
