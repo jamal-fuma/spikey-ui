@@ -77,8 +77,8 @@ $(document).ready(function(){
 
             var list_element = $("." + list_config.name);
 
-            console.log("Config for list: " + list_config.root);
-            console.log("Config for list: " + list_config_hash.root);
+            console.log("Config for list: " + list_config.root.li);
+            console.log("Config for list: " + list_config_hash);
             console.log("Config for list: " + list_config.name);
 
             // add the parent css classes
