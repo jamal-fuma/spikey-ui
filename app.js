@@ -10,7 +10,7 @@ jQuery.fn.api_service_metadata = function(){
     var registry = {
         masthead: {
             name: "masthead",
-            version: "latest"
+            version: "dev"
         },
         footer: {
             name: "footer",
