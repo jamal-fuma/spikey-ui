@@ -56,7 +56,7 @@ $(document).ready(function(){
             var list_config  = this;
             var list_element = $("." + list_config.name);
             console.log("Config for list: " + list_config.name);
-                $.each(list_config.root.css.classes,function(el){
+                $.each(list_config.root.css.classes,function(idx,el){
                     console.log("Css classes to add to list: " + list_config.name + " " + el);
                 });
 
