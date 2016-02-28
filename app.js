@@ -45,9 +45,11 @@ $(document).ready(function(){
         $.each(menubar.nav,function(){
             var list_config  = this;
             var list_element = $("." + list_config.name);
-
             console.log("Config for list: " + list_config.name);
-            console.log("list: " + list_element.html());
+                list_element.find('li').each(function(){
+                    var list_item  = this;
+                    console.log(list_config.name + " -> " + list_item.html());
+                });
         });
 
         // add css to left navbar
