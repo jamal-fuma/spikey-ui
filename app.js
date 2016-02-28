@@ -31,8 +31,12 @@ $(document).ready(function(){
     PageView.reload();
 
     var menubar = {
-        nav: [ { name: 'fs-inline-list-left'},
-               { name: 'fs-inline-list-right'} ]
+        nav: [ { name: 'fs-inline-list-left',
+                 root: {}
+               },
+               { name: 'fs-inline-list-right',
+                 root: {},
+               } ]
     };
 
     $(document).on("masthead.data.load.done",function(e,resp){
