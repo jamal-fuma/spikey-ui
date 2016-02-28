@@ -34,7 +34,7 @@ $(document).ready(function(){
         // add css to left navbar
         var left_nav = $(' .fs-inline-list-left');
         left_nav.addClass('col-xs-12 col-sm-10 col-md-10 col-lg-10');
-        $.each(left_nav.find('li'), function(el){
+        $.each(left_nav.find('li'), function(index,el){
             el.addClass('col-xs-12 col-sm-2 col-md-2 col-lg-2');
             el.find('a').addClass('Wt-ip');
             el.s
@@ -43,7 +43,7 @@ $(document).ready(function(){
         // add css to right navbar
         var right_nav = $(' .fs-inline-list-right');
         right_nav.addClass('col-xs-12 col-sm-2 col-md-2 col-lg-2');
-        $.each(right_nav.find('li'), function(el){
+        $.each(right_nav.find('li'), function(index,el){
             el.addClass('col-xs-12 col-sm-2 col-md-2 col-lg-2');
             el.find('a').addClass('Wt-ip');
         });
