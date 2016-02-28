@@ -117,12 +117,13 @@ $(document).ready(function(){
         $.each(menubar.nav,function(){
             var list_config = this;
 
-            // handle add css class message
+            // subscribe to update elements as needed
             $(document).on(list_config.name + ".layout.classes.added",function(e, element, css_class_to_add){
                 element.addClass(css_class_to_add);
             });
 
-            update_tree(this);
+            // pump events
+            broadcast_css_updates(list_config);
         }); // nav elements
     }); // on
 
