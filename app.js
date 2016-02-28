@@ -31,59 +31,79 @@ $(document).ready(function(){
     PageView.reload();
 
     var menubar = {
-        nav: [ { name: 'fs-inline-list-left',
-                 root: {
-                     css: {
-                        classes:[
-                            'col-xs-12','col-sm-10','col-md-10','col-lg-10'
-                        ]
-                     }
-                 }
-               },
-               { name: 'fs-inline-list-right',
-                 root: {
-                     css: {
-                        classes:[
-                            'col-xs-12','col-sm-2','col-md-2','col-lg-2'
-                        ]
-                     }
-                 }
-               } ]
+        nav: [{
+            name: 'fs-inline-list-left',
+            root: {
+                css: {
+                    classes:[ 'col-xs-12','col-sm-10','col-md-10','col-lg-10' ],
+                    li: {
+                        css: {
+                            classes:[ 'col-xs-12','col-sm-2','col-md-2','col-lg-2' ]
+                        },
+                        a: {
+                            css: {
+                                classes:[ 'Wt-ip' ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            name: 'fs-inline-list-right',
+            root: {
+                css: {
+                    classes:[ 'col-xs-12','col-sm-2','col-md-2','col-lg-2' ]
+                },
+                li: {
+                    css: {
+                        classes:[ 'col-xs-12','col-sm-2','col-md-2','col-lg-2' ]
+                    },
+                    a: {
+                        css: {
+                            classes:[ 'Wt-ip' ]
+                        }
+                    }
+                }
+            }
+        }]
     };
 
     $(document).on("masthead.data.load.done",function(e,resp){
         $.each(menubar.nav,function(){
             var list_config  = this;
             var list_element = $("." + list_config.name);
+
             console.log("Config for list: " + list_config.name);
-                $.each(list_config.root.css.classes,function(idx,el){
-                    console.log("Css classes to add to list: " + list_config.name + " " + el);
-                });
 
-                list_element.find('li').each(function(){
-                    var list_item  = $(this);
-                    console.log(list_config.name + " -> " + list_item.html());
-                });
-        });
-
-        // add css to left navbar
-        var left_nav = $(' .fs-inline-list-left');
-        left_nav.addClass('col-xs-12 col-sm-10 col-md-10 col-lg-10');
-        left_nav.find('li').each(function(){
-            var el = $(this);
-            el.addClass('col-xs-12 col-sm-2 col-md-2 col-lg-2');
-            el.find('a').each(function(){
-                var link = $(this);
-                link.addClass('Wt-ip');
+            // add the parent css classes
+            $.each(list_config.root.css.classes,function(idx,el){
+                console.log("list: " + list_config.name + " add css class " + el);
+                list_element.addClass(el);
             });
-        });
 
-        // add css to right navbar
-        var right_nav = $(' .fs-inline-list-right');
-        right_nav.addClass('col-xs-12 col-sm-2 col-md-2 col-lg-2');
-        $.each(right_nav.find('li'), function(index,el){
-            el.addClass('col-xs-12 col-sm-2 col-md-2 col-lg-2');
-            el.find('a').addClass('Wt-ip');
-        });
-    });
-});
+            // add the child css classes
+            list_element.find('li').each(function(){
+                var list_item  = $(this);
+                var links = [];
+
+                // add the list item css
+                $.each(list_config.root.li.css.classes, function(idx,el) {
+                    console.log(list_config.name + " add css class " + el + " -> " + list_item.html());
+                    list_item.addClass(el);
+
+                    // save element references for later
+                    list_item.find('a').each(function(){
+                        var link = $(this);
+                        // add anchor css
+                        $.each(list_config.root.li.a.css.classes,function(idx,el){
+                            console.log(list_config.name + " add css class " + el + " -> " + link.href());
+                            link.addClass(el);
+                        }); // li.a.css
+                    }); // li.a
+                });// li.css
+            }); // root.li
+        }); // nav elements
+    }); // on
+
+}); // doc read
