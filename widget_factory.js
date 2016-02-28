@@ -7,6 +7,7 @@ var WidgetFactory =
         // private: within this closure scope
         var registry = metadata.components;
         var api_base = metadata.api_gw;
+        var site_base = metadata.site;
         var cdn_url  = api_base.cdn;
 
         // resolve component to service url
@@ -77,9 +78,13 @@ var WidgetFactory =
                     console.log("WidgetFactory::build()::extend(" + css_selector + ") with data.load.done handler('" + resp + "')");
                     $(css_selector).data("latest",resp.payload);
                     $(css_selector).html( $(css_selector).data("latest"));
-                    // fixup cnd urls
+                    // fixup relative image srcs to point at cdn
                     $(css_selector + ' img').attr('src', function(index, src) {
-                        return cdn_url + src;
+                        return (src.charAt(0) != '/') ? src : cdn_url + src;
+                    });
+                    // fixup relative url to point at site
+                    $(css_selector + ' a').attr('href', function(index, href) {
+                        return (href.charAt(0) != '/') ? href : site_base + href;
                     });
                 });
                 // server sent 403 response
