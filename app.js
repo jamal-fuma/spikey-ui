@@ -104,7 +104,7 @@ $(document).ready(function(){
             // broadcast add css class message
             list_item.find('a').each(function(){
                 var link = $(this);
-                $.each(list_config.root.['li'].['a'].css.classes,function(idx,el){
+                $.each(list_config.root['li']['a'].css.classes,function(idx,el){
                     $(document).trigger(list_config.name + ".layout.classes.added",link,el);
                 }); // li.a.css
             });
