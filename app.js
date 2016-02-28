@@ -31,7 +31,7 @@ $(document).ready(function(){
     PageView.reload();
 
     // add css to left navbar
-    var left_nav = $('ul.fs-inline-list-left');
+    var left_nav = $('.fs-inline-list-left');
     left_nav.addClass('col-xs-12 col-sm-10 col-md-10 col-lg-10');
     $.each(left_nav.find('li'), function(el){
         el.addClass('col-xs-12 col-sm-2 col-md-2 col-lg-2');
@@ -40,7 +40,7 @@ $(document).ready(function(){
     });
 
     // add css to right navbar
-    var right_nav = $('ul.fs-inline-list-right');
+    var right_nav = $('.fs-inline-list-right');
     right_nav.addClass('col-xs-12 col-sm-2 col-md-2 col-lg-2');
     $.each(right_nav.find('li'), function(el){
         el.addClass('col-xs-12 col-sm-2 col-md-2 col-lg-2');
