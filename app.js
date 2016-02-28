@@ -30,14 +30,27 @@ $(document).ready(function(){
     PageView.setup();
     PageView.reload();
 
+    var menubar = {
+        nav: [ { name: 'fs-inline-list-left'},
+               { name: 'fs-inline-list-right'} ]
+    };
+
     $(document).on("masthead.data.load.done",function(e,resp){
+        $.each(menubar.nav,function(){
+            var list_config = this;
+            console.log("Config for list: " + list_config.name);
+        });
+
         // add css to left navbar
         var left_nav = $(' .fs-inline-list-left');
         left_nav.addClass('col-xs-12 col-sm-10 col-md-10 col-lg-10');
-        $.each(left_nav.find('li'), function(index,el){
+        left_nav.find('li').each(function(){
+            var el = $(this);
             el.addClass('col-xs-12 col-sm-2 col-md-2 col-lg-2');
-            el.find('a').addClass('Wt-ip');
-            el.s
+            el.find('a').each(function(){
+                var link = $(this);
+                link.addClass('Wt-ip');
+            });
         });
 
         // add css to right navbar
