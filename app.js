@@ -33,19 +33,33 @@ $(document).ready(function(){
     var menubar = {
         nav: [ { name: 'fs-inline-list-left',
                  root: {
+                     css: {
+                        classes:[
+                            'col-xs-12','col-sm-10','col-md-10','col-lg-10'
+                        ]
+                     }
                  }
                },
                { name: 'fs-inline-list-right',
                  root: {
-                 },
+                     css: {
+                        classes:[
+                            'col-xs-12','col-sm-2','col-md-2','col-lg-2'
+                        ]
+                     }
+                 }
                } ]
     };
 
     $(document).on("masthead.data.load.done",function(e,resp){
         $.each(menubar.nav,function(){
-            var list_config  = this;
+            var list_config  = $(this);
             var list_element = $("." + list_config.name);
             console.log("Config for list: " + list_config.name);
+                $.each(list_config.root.css.classes,function(el){
+                    console.log("Css classes to add to list: " + list_config.name + " " + el);
+                });
+
                 list_element.find('li').each(function(){
                     var list_item  = $(this);
                     console.log(list_config.name + " -> " + list_item.html());
