@@ -119,6 +119,7 @@ $(document).ready(function(){
 
             // subscribe to update elements as needed
             $(document).on(list_config.name + ".layout.classes.added",function(e, element, css_class_to_add){
+                console.log("got add css class message: " + css_class_to_add );
                 $(element).addClass(css_class_to_add);
             });
 
