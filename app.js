@@ -1,7 +1,8 @@
 jQuery.fn.api_service_metadata = function(){
     // base of all service calls
     var api_base = {
-        url: '.././Fuma/services', namespace: 'fuma', representation: 'json'
+        url: '.././Fuma/services', namespace: 'fuma', representation: 'json',
+        cdn: 'http://www.fumasoftware.co.uk'
     };
 
     // all known implementions
