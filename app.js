@@ -34,6 +34,7 @@ $(document).ready(function(){
         nav: [
             {
             name: 'fs-inline-list-left',
+            selector: '.',
             root: {
                 css: {
                     classes:[ 'col-xs-12','col-sm-10','col-md-10','col-lg-10' ]
@@ -52,6 +53,7 @@ $(document).ready(function(){
         },
         {
             name: 'fs-inline-list-right',
+            selector: '.',
             root: {
                 css: {
                     classes:[ 'col-xs-12','col-sm-2','col-md-2','col-lg-2' ]
@@ -70,43 +72,58 @@ $(document).ready(function(){
         }]
     };
 
-    $(document).on("masthead.data.load.done",function(e,resp){
+    // a binder is a doadadic function taking (the 'bound_variable' and the resumption 'bound_function')
+    // a binder returns a niladic function which is a closure over the returning the result of applying the resumption to the bound_variable and any caller supplied arguments
+    var binder = function(bound_variable,bound_function) {
+        return function() {
+            console.log(bound_variable);
+            arguments.unshift(bound_variable);
+            return bound_function(arguments);
+        };
+    };
+
+    function broadcast_css_updates(list_config)
+    {
+        console.log("Config for list: " + list_config.name);
+
+         // add the parent css classes
+        var root = $(list_config.selector + list_config.name);
+        $.each(list_config.root.css.classes,function(idx,el){
+            // broadcast add css class message
+            $(document).trigger(list_config.name + ".layout.classes.added",root,el);
+        });
+
+        // add the child css classes
+        root.find('li').each(function(){
+            // broadcast add css class message
+            var list_item = $(this);
+            $.each(list_config.root['li'].css.classes, function(idx,el) {
+                $(document).trigger(list_config.name + ".layout.classes.added",list_item,el);
+            });// li.css
+
+            // broadcast add css class message
+            list_item.find('a').each(function(){
+                var link = $(this);
+                $.each(list_config.root.['li'].['a'].css.classes,function(idx,el){
+                    $(document).trigger(list_config.name + ".layout.classes.added",link,el);
+                }); // li.a.css
+            });
+        });
+
+        return root;
+    }
+
+   $(document).on("masthead.data.load.done",function(e,resp){
         $.each(menubar.nav,function(){
-            var list_config  = this;
+            var list_config = this;
 
-            var list_element = $("." + list_config.name);
-
-            console.log("Config for list: " + list_config.name);
-            console.log("Config for list.root: " + list_config.root.li);
-
-            // add the parent css classes
-            $.each(list_config.root.css.classes,function(idx,el){
-                console.log("list: " + list_config.name + " add css class " + el);
-                list_element.addClass(el);
+            // handle add css class message
+            $(document).on(list_config.name + ".layout.classes.added",function(e, element, css_class_to_add){
+                element.addClass(css_class_to_add);
             });
 
-            // add the child css classes
-            list_element.find('li').each(function(){
-                var list_item  = $(this);
-                var links = [];
-
-                // add the list item css
-                $.each(list_config.root.li.css.classes, function(idx,el) {
-                    console.log(list_config.name + " add css class " + el + " -> " + list_item.html());
-                    list_item.addClass(el);
-
-                    // save element references for later
-                    list_item.find('a').each(function(){
-                        var link = $(this);
-                        // add anchor css
-                        $.each(list_config.root.li.a.css.classes,function(idx,el){
-                            console.log(list_config.name + " add css class " + el + " -> " + link.attr('href'));
-                            link.addClass(el);
-                        }); // li.a.css
-                    }); // li.a
-                });// li.css
-            }); // root.li
+            update_tree(this);
         }); // nav elements
     }); // on
 
-}); // doc read
+}); // doc ready
