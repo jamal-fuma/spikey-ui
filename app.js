@@ -1,4 +1,5 @@
 jQuery.fn.api_service_metadata = function(){
+
     // base of all service calls
     var api_base = {
         url: '.././Fuma/services', namespace: 'fuma', representation: 'json',
@@ -17,6 +18,7 @@ jQuery.fn.api_service_metadata = function(){
             version: "latest"
         }
     };
+
     console.log("api_service_metadata()");
     return {api_gw: api_base, components: registry};
 };
@@ -31,11 +33,55 @@ $(document).ready(function(){
     PageView.reload();
 
     var menubar = {
+        toolbar: {
+            nav: {
+                css: { classes:[ 'navbar', 'navbar-default'] },
+                div: [{
+                    css: { classes:[ 'container-fluid'] },
+                    div: { css: { classes:[ 'navbar-header'] },
+                        button: { css: { classes:[ 'navbar-toggle','collapsed'] },
+                            data: [ {name: "toggle", value: "collapse"},
+                                {name: "target", value: "#bs-example-navbar-collapse-1"}],
+
+                                aria: [ {name: "expanded", value: "false"}],
+                                span: [ { css: { classes: ['sr-only'] }}, { css: { classes: ['icon-bar'] }}]
+                        }
+                    },
+                    a: { css: { classes:[ 'navbar-brand'] } }
+                },
+                {
+                    css: { classes:[ 'container-fluid'] },
+                    div: {
+                        css: { classes:[ 'navbar-collapse','collapse'], id: "bs-example-navbar-collapse-1"},
+                        ul: {
+                            css: { classes:[ 'navbar-nav','nav'] },
+                            li: [
+                                { css: { classes:[ 'active'] },
+                                    a: { css: { classes: [] },
+                                        span: { css: { classes:[ 'sr-only' ] }, } } },
+                                        { css: { classes:[] },
+                                            a: { css: { classes: [] }, } },
+
+                                            { css: { classes:[ 'dropdown'] },
+                                                a: { css: { classes: ['dropdown-toggle'] },
+                                                    role: "button",
+                                                    data: [ {name: "toggle", value: "dropdown"}],
+                                                    aria: [ {name: "haspopup", value: "true"},
+                                                        {name: "expanded", value: "false"}],
+                                                        span: { css: { classes:[ 'caret' ] } }} }]
+                        } }
+                }]
+            }
+        },
         nav: [
             {
             name: 'fs-inline-list-left',
             selector: '.',
             root: {
+                links:[{
+                    text: 'Foo',
+                    target: '/foo'
+                }],
                 css: {
                     classes:[ 'col-xs-12','col-sm-10','col-md-10','col-lg-10' ]
                 },
@@ -55,6 +101,10 @@ $(document).ready(function(){
             name: 'fs-inline-list-right',
             selector: '.',
             root: {
+                links:[{
+                    text: 'Foo',
+                    target: '/foo'
+                }],
                 css: {
                     classes:[ 'col-xs-12','col-sm-2','col-md-2','col-lg-2' ]
                 },
@@ -82,38 +132,78 @@ $(document).ready(function(){
         };
     };
 
+    function booststrap_navigation_bar(list_config)
+    {
+        //  var root = $(list_config.selector + list_config.name);
+        var root = $("<nav></nav>");
+    }
+
     function broadcast_css_updates(list_config,child,grandchild)
     {
         console.log("Config for list: " + list_config.name);
 
-         // add the parent css classes
-        var root = $(list_config.selector + list_config.name);
+      //  var root = $(list_config.selector + list_config.name);
+        var root = $("<ul></ul>");
+
+        // add the parent css classes
         $.each(list_config.root.css.classes,function(idx,el){
             // broadcast add css class message
             $(document).trigger(list_config.name + ".layout.classes.added",root,el);
         });
 
-        // add the child css classes
-        root.find(child).each(function(){
+        // publish children events
+        $.each(list_config.root.links,function(idx,el){
             // broadcast add css class message
-            var list_item = $(this);
+            var list_item = $("<child></child>".replace("child",child));
+            var anchor = $("<grandchild></grandchild>".replace("grandchild",grandchild));
+            anchor.text(el.text);
+
+            // fixup relative url to point at site
+            $(anchor).attr('href', function(index, href) {
+                var site_base = "/fixme/app.js";
+                return (el.target.charAt(0) != '/') ? el.target : site_base + el.target;
+            });
+
+            // publish adding li
+            $(document).trigger("layout.element.added",root,list_item);
+
+            // publish adding li css
             $.each(list_config.root[child].css.classes, function(idx,el) {
                 $(document).trigger(list_config.name + ".layout.classes.added",[list_item,el]);
             });// li.css
 
-            // broadcast add css class message
-            list_item.find(grandchild).each(function(){
-                var link = $(this);
-                $.each(list_config.root[child][grandchild].css.classes,function(idx,el){
-                    $(document).trigger(list_config.name + ".layout.classes.added",[link,el]);
-                }); // li.a.css
-            });
+            // publish adding li a
+            $(document).trigger("layout.element.added",list_item,anchor);
+
+            // publish adding li a css
+            $.each(list_config.root[child][grandchild].css.classes,function(idx,el){
+                $(document).trigger(list_config.name + ".layout.classes.added",[link,el]);
+            }); // li.a.css
         });
 
         return root;
     }
 
-   $(document).on("masthead.data.load.done",function(e,resp){
+    // subscribe to update elements as needed
+    $(document).on("javascript.libraries.added",function(e, element, library){
+        var el = $("<script></script>");
+        el.attr('src',function(index,src){
+            return library;
+        });
+
+        el.attr('type',function(index,src){
+            return "text/javascript"
+        });
+
+        $(body).after(el);
+    });
+
+    // subscribe to update elements as needed
+    $(document).on("layout.element.added",function(e, element, child){
+        $(element).append(child);
+    });
+
+    $(document).on("masthead.data.load.done",function(e,resp){
         $.each(menubar.nav,function(){
             var list_config = this;
 
@@ -123,7 +213,9 @@ $(document).ready(function(){
             });
 
             // pump events
-            broadcast_css_updates(list_config,'li','a');
+            var list = broadcast_css_updates(list_config,'li','a');
+            $(document).trigger("layout.element.added",$(body),list);
+
         }); // nav elements
     }); // on
 
