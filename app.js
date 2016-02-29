@@ -27,12 +27,7 @@ jQuery.fn.api_service_metadata = function(){
 var app_config = $(this).api_service_metadata();
 var PageView = $(this).make_page_view(app_config);
 
-// bind on load
-$(document).ready(function(){
-    PageView.setup();
-    PageView.reload();
-
-    var menubar = {
+var menubar = {
         toolbar: {
             nav: {
                 css: { classes:[ 'navbar', 'navbar-default'] },
@@ -122,6 +117,7 @@ $(document).ready(function(){
         }]
     };
 
+
     // a binder is a doadadic function taking (the 'bound_variable' and the resumption 'bound_function')
     // a binder returns a niladic function which is a closure over the returning the result of applying the resumption to the bound_variable and any caller supplied arguments
     var binder = function(bound_variable,bound_function) {
@@ -184,39 +180,44 @@ $(document).ready(function(){
         return root;
     }
 
-    // subscribe to update elements as needed
-    $(document).on("javascript.libraries.added",function(e, element, library){
-        var el = $("<script></script>");
-        el.attr('src',function(index,src){
-            return library;
-        });
 
-        el.attr('type',function(index,src){
-            return "text/javascript"
-        });
+// subscribe to update elements as needed
+$(document).on("javascript.libraries.added",function(e, library){
+    var element = $("<script></script>");
+    $(document).trigger("layout.element.attribute.written",element,'type',function(){return 'text/javascript';});
+    $(document).trigger("layout.element.attribute.written",element,'src', function(){return library;});
+    $(document).trigger("layout.element.added",$(body),element);
+});
 
-        $(body).after(el);
+// subscribe to add elements
+$(document).on("layout.element.added",function(e, element, child){
+    $(element).append(child);
+});
+
+// subscribe to add css
+$(document).on("layout.classes.added",function(e, element, css_class_to_add){
+    $(element).addClass(css_class_to_add);
+});
+
+// subscribe to add attributes
+$(document).on("layout.element.attribute.written",function(e, element, name, continuation){
+    $(element).attr(name,function(index,original_value){
+        return continuation(index,original_value);
     });
+});
 
-    // subscribe to update elements as needed
-    $(document).on("layout.element.added",function(e, element, child){
-        $(element).append(child);
-    });
 
-    $(document).on("masthead.data.load.done",function(e,resp){
-        $.each(menubar.nav,function(){
-            var list_config = this;
+$(document).on("masthead.data.load.done",function(e,resp){
+    $.each(menubar.nav,function(){
+        var list_config = this;
+        var list = broadcast_css_updates(list_config,'li','a');
+        $(document).trigger("layout.element.added",$(body),list);
+    }); // nav elements
+}); // nav elements
 
-            // subscribe to update elements as needed
-            $(document).on(list_config.name + ".layout.classes.added",function(e, element, css_class_to_add){
-                $(element).addClass(css_class_to_add);
-            });
 
-            // pump events
-            var list = broadcast_css_updates(list_config,'li','a');
-            $(document).trigger("layout.element.added",$(body),list);
-
-        }); // nav elements
-    }); // on
-
+// bind on load
+$(document).ready(function(){
+    PageView.setup();
+    PageView.reload();
 }); // doc ready
