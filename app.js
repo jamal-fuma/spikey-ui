@@ -173,7 +173,7 @@ var menubar = {
 
             // publish adding li a css
             $.each(list_config.root[child][grandchild].css.classes,function(idx,el){
-                $(document).trigger(list_config.name + ".layout.classes.added",[link,el]);
+                $(document).trigger(list_config.name + ".layout.classes.added",[anchor,el]);
             }); // li.a.css
         });
 
