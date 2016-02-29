@@ -186,7 +186,7 @@ $(document).on("javascript.libraries.added",function(e, library){
     var element = $("<script></script>");
     $(document).trigger("layout.element.attribute.written",element,'type',function(){return 'text/javascript';});
     $(document).trigger("layout.element.attribute.written",element,'src', function(){return library;});
-    $(document).trigger("layout.element.added",$(body),element);
+    $(document).trigger("layout.element.added",$('body'),element);
 });
 
 // subscribe to add elements
@@ -211,7 +211,7 @@ $(document).on("masthead.data.load.done",function(e,resp){
     $.each(menubar.nav,function(){
         var list_config = this;
         var list = broadcast_css_updates(list_config,'li','a');
-        $(document).trigger("layout.element.added",$(body),list);
+        $(document).trigger("layout.element.added",$('body'),list);
     }); // nav elements
 }); // nav elements
 
