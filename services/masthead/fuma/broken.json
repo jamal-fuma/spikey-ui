@@ -1,0 +1,105 @@
+{
+    "version":"1.0",
+    "representation":"text/html",
+    "payload":
+    {
+        registry = {
+            masthead: {
+                name: "masthead.logo",
+                version: "latest",
+            },
+            footer: {
+                name: "footer",
+                version: "latest"
+            }
+    };
+ e
+{"node": [{ "name": "Agency", "child": [{ "name": "agency-link" }, { "name": "txy" }] }, { "name": "Foo", "child": [{ "name": "ism" }, { "name": "sss" }] }, { "name": "PPP" }, { "name": "QQQ" }] }}
+
+<div class='col-xs-12 col-sm-12'>
+    <a href='http://www.fumasoftware.co.uk/'><img class='img-responsive' alt='Fuma Software' src='/images/fuma_logo_col_trimmed.png'></a>
+</div>
+
+
+class='fs-inline-list-left col-xs-12 col-sm-10 col-md-10 col-lg-10' data-bind='foreach: primary_nav'
+    class='col-xs-12 col-sm-2 col-md-2 col-lg-2'
+        class='Wt-ip' data-bind='text:name'
+
+<nav class='row'>
+<ul>
+    <li>
+        <a href="{link-target}">"{link-text}"</a>
+    </li>
+</ul>
+
+<ul class='fs-inline-list-right col-xs-12 col-sm-2 col-md-2 col-lg-2'>
+    <li class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>
+    <a href='/login' class='Wt-ip'>Client Login</a>
+</li>
+</ul>
+
+<ul class='fs-inline-list-left col-xs-12 col-sm-10 col-md-10 col-lg-10' data-bind='foreach: primary_nav'>
+<li class='col-xs-12 col-sm-2 col-md-2 col-lg-2' data-bind="text: $data.link_text, css: { selected: $data == $root.chosenFolderId() }, click: $root.goToFolder"><a data-bind='text: $data.link_text, href: $data.link_location, css: { class: Wt-ip }></a></li></ul>
+
+<li class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>
+'nav-menubar
+<li class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>
+<a href='/news' class='Wt-ip'>News</a>
+</li>
+<li class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>
+<a href='/expertise' class='Wt-ip'>Expertise</a>
+</li>
+<li class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>
+<a href='/work' class='Wt-ip'>Work</a>
+</li>
+<li class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>
+<a href='/contact' class='Wt-ip'>Contact</a>
+</li>
+</ul>
+<ul class='fs-inline-list-right col-xs-12 col-sm-2 col-md-2 col-lg-2'>
+<li class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>
+<a href='/login' class='Wt-ip'>Client Login</a>
+</li>
+</ul>
+<h2 class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>
+</h2>
+</nav>
+<div id='nav-menubar'>
+<a title='Console Home' target='_top' href='https://console.aws.amazon.com/console/home?region=us-east-1' class='nav-elt' id='nav-home-link'>
+<div id='nav-logo'>&nbsp;</div>
+</a>
+<div class='nav-menu-separator'>&nbsp;</div>
+<a data-menu-content='resourceGroupsMenuContent' href='#' class='nav-elt nav-menu' id='nav-resourceGroupsMenu'>
+<div class='nav-elt-label'>AWS</div>
+<div class='nav-menu-arrow'>&nbsp;</div>
+</a>
+<div class='nav-menu-separator'>&nbsp;</div>
+<a data-menu-content='servicesMenuContent' href='#' class='nav-elt nav-menu' id='nav-servicesMenu'>
+<div class='nav-elt-label'>Services</div>
+<div class='nav-menu-arrow'>&nbsp;</div>
+</a>
+<div class='nav-menu-separator'>&nbsp;</div>
+<ul id='nav-shortcutBar' style='width: 717.5px;'>
+</ul>
+<a data-menu-content='shortcutMenuContent' href='#' class='nav-elt nav-menu' id='nav-shortcutMenu' style='position: absolute; left: 268.867px;'>
+<div class='nav-elt-label'>Edit</div>
+<div class='nav-menu-arrow'>&nbsp;</div>
+<div id='nav-shortcut-menu-separator'>&nbsp;</div>
+</a>
+<div id='nav-menu-right'>
+<a data-menu-content='usernameMenuContent' class='nav-elt nav-menu' href='#' id='nav-usernameMenu'>
+<div class='nav-elt-label' title='Stink TV'>Stink TV</div>
+<div class='nav-menu-arrow'>&nbsp;</div>
+</a>
+<div class='nav-menu-separator'>&nbsp;</div>
+<a data-menu-content='regionMenuContent' href='#' class='nav-elt nav-menu' id='nav-regionMenu'>
+<div class='nav-elt-label'>N. Virginia</div>
+<div class='nav-menu-arrow'>&nbsp;</div>
+</a>
+<div class='nav-menu-separator'>&nbsp;</div>
+<a data-menu-content='helpMenuContent' class='nav-elt nav-menu' href='#' id='nav-helpMenu'>
+<div class='nav-elt-label'>Support</div>
+<div class='nav-menu-arrow'>&nbsp;</div>
+</a>
+</div>
+</div>"}
