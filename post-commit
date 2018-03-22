@@ -1,0 +1,27 @@
+#!/bin/sh
+set -x
+
+export NS="UI"
+
+export ROOT_DIR=/Users/me/Sites/api
+export REPO_DIR=/Users/me/Rescue/${NS}/.git
+export DEST_DIR=${ROOT_DIR}/${NS}
+
+
+cat <<-EOF
+GIT_AUTHOR_DATE="${GIT_AUTHOR_DATE}"
+GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL}"
+GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME}"
+GIT_DIR="${GIT_DIR}"
+GIT_EDITOR="${GIT_EDITOR}"
+GIT_INDEX_FILE="${GIT_INDEX_FILE}"
+GIT_PREFIX="${GIT_PREFIX}"
+
+ROOT_DIR="${ROOT_DIR}"
+REPO_DIR="${REPO_DIR}"
+DEST_DIR="${DEST_DIR}"
+EOF
+
+unset GIT_INDEX_FILE
+mkdir -p ${DEST_DIR}
+git --work-tree=${DEST_DIR} --git-dir=${REPO_DIR} checkout -f
